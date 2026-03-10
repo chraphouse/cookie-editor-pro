@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cookie Editor Pro</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <div class="header-row">
+      <div>
+        <h1>Cookie Editor Pro</h1>
+        <div class="site-info" id="siteInfo"></div>
+      </div>
+      <div class="header-stats">
+        <span class="stat" id="cookieCount" title="Cookies">0</span>
+        <span class="stat" id="storageCount" title="Storage items">0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="cookies">Cookies</button>
+    <button class="tab" data-tab="storage">Storage</button>
+    <button class="tab" data-tab="profiles">Profiles</button>
+  </div>
+
+  <div class="toolbar">
+    <input type="text" id="searchInput" placeholder="Search..." class="search-input">
+    <div class="toolbar-buttons">
+      <button id="addBtn" class="btn btn-sm btn-primary" title="Add new">+</button>
+      <button id="exportBtn" class="btn btn-sm" title="Export">Export</button>
+      <button id="importBtn" class="btn btn-sm" title="Import">Import</button>
+      <button id="deleteAllBtn" class="btn btn-sm btn-danger" title="Delete all">Clear All</button>
+    </div>
+  </div>
+
+  <div id="cookiesTab" class="tab-content active">
+    <div id="cookiesList" class="items-list"></div>
+  </div>
+
+  <div id="storageTab" class="tab-content">
+    <div class="storage-tabs">
+      <button class="storage-tab active" data-storage="local">localStorage</button>
+      <button class="storage-tab" data-storage="session">sessionStorage</button>
+    </div>
+    <div id="storageList" class="items-list"></div>
+  </div>
+
+  <div id="profilesTab" class="tab-content">
+    <div class="profiles-toolbar">
+      <button id="saveProfileBtn" class="btn btn-sm btn-primary">Save Current Cookies</button>
+    </div>
+    <div id="profilesList" class="items-list"></div>
+  </div>
+
+  <div id="editModal" class="modal hidden">
+    <div class="modal-content">
+      <h2 id="modalTitle">Edit Cookie</h2>
+      <form id="editForm">
+        <div class="form-group">
+          <label for="editName">Name</label>
+          <input type="text" id="editName" required>
+        </div>
+        <div class="form-group">
+          <label for="editValue">Value</label>
+          <textarea id="editValue" rows="3"></textarea>
+        </div>
+        <div id="cookieFields">
+          <div class="form-group">
+            <label for="editDomain">Domain</label>
+            <input type="text" id="editDomain">
+          </div>
+          <div class="form-group">
+            <label for="editPath">Path</label>
+            <input type="text" id="editPath" value="/">
+          </div>
+          <div class="form-row">
+            <label><input type="checkbox" id="editSecure"> Secure</label>
+            <label><input type="checkbox" id="editHttpOnly"> HttpOnly</label>
+          </div>
+          <div class="form-group">
+            <label for="editSameSite">SameSite</label>
+            <select id="editSameSite">
+              <option value="lax">Lax</option>
+              <option value="strict">Strict</option>
+              <option value="no_restriction">None</option>
+              <option value="unspecified">Unspecified</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editExpires">Expires</label>
+            <input type="datetime-local" id="editExpires">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" id="cancelBtn" class="btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="importModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Import</h2>
+      <textarea id="importData" rows="8" placeholder="Paste JSON data here..."></textarea>
+      <div class="form-actions">
+        <button id="importCancelBtn" class="btn">Cancel</button>
+        <button id="importConfirmBtn" class="btn btn-primary">Import</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="profileNameModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Save Cookie Profile</h2>
+      <p class="modal-desc">Save all cookies for this site as a named profile. Restore them later to switch between accounts.</p>
+      <div class="form-group">
+        <label for="profileNameInput">Profile Name</label>
+        <input type="text" id="profileNameInput" placeholder="e.g. Work Account, Test User">
+      </div>
+      <div class="form-actions">
+        <button id="profileNameCancelBtn" class="btn">Cancel</button>
+        <button id="profileNameSaveBtn" class="btn btn-primary">Save Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirmModal" class="modal hidden">
+    <div class="modal-content">
+      <h2 id="confirmTitle">Confirm</h2>
+      <p id="confirmMessage" class="modal-desc"></p>
+      <div class="form-actions">
+        <button id="confirmCancelBtn" class="btn">Cancel</button>
+        <button id="confirmOkBtn" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="statusBar" class="status-bar hidden"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
